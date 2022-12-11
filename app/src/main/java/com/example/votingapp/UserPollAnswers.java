@@ -29,17 +29,22 @@ public class UserPollAnswers extends AppCompatActivity {
         String Qid = intent.getStringExtra("qid");
         LinearLayout L1 = (LinearLayout) findViewById(R.id.QAfield);
         TextView tv = new TextView(this);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        //tv.setBackgroundResource(R.drawable.my_border);
+        tv.setText(Qid+". "+question);
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        tv.setBackgroundResource(R.drawable.my_border);
-        tv.setText(question);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(40, 15, 40, 15);
         tv.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        L1.addView(tv);
+        L1.addView(tv, layoutParams);
 
         Cursor c1 = db.rawQuery("SELECT * FROM answer WHERE  qid = '" +Integer.valueOf(Qid)+"'", null);
         int rows = c1.getCount();
         RadioGroup RG = new RadioGroup(this);
+
         LinearLayout LL = (LinearLayout) findViewById(R.id.QAfield);
         if (c1.moveToPosition(0)) {
             do {
@@ -50,6 +55,7 @@ public class UserPollAnswers extends AppCompatActivity {
                 final float scale = UserPollAnswers.this.getApplicationContext().getResources().getDisplayMetrics().density;
                 int pixels = (int) (100 * scale + 0.5f);
                 rb.setId(i);
+                rb.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 //tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
                 rb.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -66,12 +72,17 @@ public class UserPollAnswers extends AppCompatActivity {
 
                     }
                 });
+                RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(40, 15, 40, 15);
+                rb.setLayoutParams(params);
                 RG.addView(rb);
                 i++;
                 c1.moveToPosition(i);
             } while (i<rows);
         }
-        LL.addView(RG);
+
+        L1.setBackgroundResource(R.drawable.my_border);
+        L1.addView(RG);
 
     }
 }

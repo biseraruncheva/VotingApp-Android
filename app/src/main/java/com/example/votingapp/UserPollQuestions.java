@@ -101,6 +101,10 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
 
             @Override
             public void onFinish() {
+                //db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
+                //c3=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
+                //c3.moveToFirst();
+                //c3.close();
                 TextView timerTextView = (TextView) findViewById(R.id.dispTimer);
                 timerTextView.setText("Finish!");
             }

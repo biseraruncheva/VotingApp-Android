@@ -12,9 +12,10 @@
         android:id="@+id/endT"
         android:layout_width="177dp"
         android:layout_height="43dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
         android:ems="10"
-        android:hint="End Time"
+        android:hint="End Time hh:mm:ss"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endD" />
@@ -23,9 +24,10 @@
         android:id="@+id/endD"
         android:layout_width="177dp"
         android:layout_height="43dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="100dp"
         android:ems="10"
-        android:hint="End Date"
+        android:hint="End Date yyyy-mm-dd"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerid" />
@@ -62,8 +64,8 @@
         android:background="@drawable/shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startT"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintTop_toBottomOf="@+id/endT"
+        app:layout_constraintVertical_bias="0.163" />
 
     <TextView
         android:id="@+id/textView13"
@@ -97,12 +99,12 @@
         class="androidx.viewpager.widget.ViewPager"
         android:layout_width="122dp"
         android:layout_height="99dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/endT"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintVertical_bias="0.163" />
 
     <TextView
         android:id="@+id/textView15"
@@ -128,42 +130,16 @@
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-    <EditText
-        android:id="@+id/startD"
-        android:layout_width="177dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="128dp"
-        android:ems="10"
-        android:hint="Start Date"
-        android:inputType="date"
-        app:layout_constraintEnd_toStartOf="@+id/endD"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerid" />
-
-    <EditText
-        android:id="@+id/startT"
-        android:layout_width="177dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="Start Time"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startD" />
-
     <Button
         android:id="@+id/startbtn"
         android:layout_width="102dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="44dp"
         android:text="Start"
-        app:layout_constraintBottom_toTopOf="@+id/startD"
+        app:layout_constraintBottom_toTopOf="@+id/endD"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerid"
-        app:layout_constraintVertical_bias="0.956" />
+        app:layout_constraintVertical_bias="0.329" />
 
     <TextView
         android:id="@+id/timerid"

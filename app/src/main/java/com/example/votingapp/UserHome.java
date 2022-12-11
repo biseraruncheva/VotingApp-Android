@@ -25,13 +25,13 @@ public class UserHome extends AppCompatActivity {
         TextView text = (TextView) findViewById(R.id.WelcomeUserID);
         text.setText("WELCOME "+usern);
         db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
-        Cursor c1 = db.rawQuery("SELECT * FROM poll", null);
+        Cursor c1 = db.rawQuery("SELECT * FROM poll WHERE status='Ongoing'", null);
         int rows = c1.getCount();
         if (c1.moveToPosition(0)) {
             do {
                 LinearLayout LL = (LinearLayout) findViewById(R.id.listactivepolls);
                 TextView tv = new TextView(this);
-                tv.setText("\n"+c1.getString(0)+". "+c1.getString(1)+" \n\n Status: Ongoing ");
+                tv.setText("\n"+c1.getString(0)+". "+c1.getString(1)+" \n\n Status: "+c1.getString(2));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 tv.setBackgroundResource(R.drawable.my_border);
                 final float scale = UserHome.this.getApplicationContext().getResources().getDisplayMetrics().density;
@@ -56,11 +56,11 @@ public class UserHome extends AppCompatActivity {
         }
         else
         {
-            LinearLayout LL = (LinearLayout) findViewById(R.id.listpolls);
+            LinearLayout LL = (LinearLayout) findViewById(R.id.listactivepolls);
             TextView tv = new TextView(this);
             tv.setText("NO ADDED POLLS YET");
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            tv.setBackgroundResource(R.drawable.my_border);
+            //tv.setBackgroundResource(R.drawable.my_border);
             final float scale = UserHome.this.getApplicationContext().getResources().getDisplayMetrics().density;
             int pixels = (int) (100 * scale + 0.5f);
             tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));

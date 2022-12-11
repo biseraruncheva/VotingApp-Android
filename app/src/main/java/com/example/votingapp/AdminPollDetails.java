@@ -67,19 +67,19 @@ public class AdminPollDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 timerTextView = findViewById(R.id.timerid);
-                startDtv = findViewById(R.id.startD);
+                //startDtv = findViewById(R.id.startD);
                 endDtv = findViewById(R.id.endD);
-                startTtv = findViewById(R.id.startT);
+                //startTtv = findViewById(R.id.startT);
                 endTtv = findViewById(R.id.endT);
-                sdate = String.valueOf(startDtv.getText());
+                //sdate = String.valueOf(startDtv.getText());
                 edate = String.valueOf(endDtv.getText());
-                stime = String.valueOf(startTtv.getText());
+                //stime = String.valueOf(startTtv.getText());
                 etime = String.valueOf(endTtv.getText());
                 TimerRunning = true;
                 start_date = null;
                 end_date = null;
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-                String pom1 = sdate+" "+stime;
+                //String pom1 = sdate+" "+stime;
                 String pom2 = edate+" "+etime;
                 try {
                     start_date = new Date();
@@ -124,6 +124,10 @@ public class AdminPollDetails extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                //db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
+                //c2=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
+                //c2.moveToFirst();
+               // c2.close();
                 timerTextView.setText("Finish!");
             }
 
@@ -142,9 +146,9 @@ public class AdminPollDetails extends AppCompatActivity {
         editor.putLong("millisLeft"+Pid, total_millis);
         editor.putLong("startmillis"+Pid, start_millis);
         editor.putLong("endmillis"+Pid, end_millis);
-        editor.putString("startd"+Pid, sdate);
+        //editor.putString("startd"+Pid, sdate);
         editor.putString("endd"+Pid, edate);
-        editor.putString("startt"+Pid, stime);
+        //editor.putString("startt"+Pid, stime);
         editor.putString("endt"+Pid, etime);
 
         editor.putBoolean("timerrunning"+Pid, TimerRunning);
