@@ -11,12 +11,12 @@
 
     <TextView
         android:id="@+id/dispTimer"
-        android:layout_width="191dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="218dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="00:00:00:00"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,14 +34,14 @@
 
     <Button
         android:id="@+id/submitbtnuser"
-        android:layout_width="112dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="133dp"
+        android:layout_height="62dp"
+        android:onClick="SubmitAnswers"
         android:text="SUBMIT ANSWERS"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/dispTimer"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="SubmitAnswers"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

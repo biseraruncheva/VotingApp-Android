@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(passw.getText().toString().equals(confirmpass.getText().toString())) {
 
-            db.execSQL("INSERT INTO user VALUES('" + usern.getText().toString() + "','"+passw.getText().toString()+"' );");
+            db.execSQL("INSERT INTO user(username,password) VALUES('" + usern.getText().toString() + "','"+passw.getText().toString()+"' );");
             Intent intent = null;
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);

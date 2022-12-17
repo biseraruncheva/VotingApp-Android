@@ -15,12 +15,16 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class AdminHome extends AppCompatActivity {
     SQLiteDatabase db;
     int i=0;
     String usern;
+    ArrayList<String> pollnames =new ArrayList<String>();
+    ArrayList<String> PIDs = new ArrayList<String>();
+
     //TextView timerTextView = findViewById(R.id.timerid);
 
     @Override
@@ -38,6 +42,8 @@ public class AdminHome extends AppCompatActivity {
             do {
                 LinearLayout LL = (LinearLayout) findViewById(R.id.listpolls);
                 TextView tv = new TextView(this);
+                pollnames.add(c1.getString(1));
+                PIDs.add(c1.getString(0));
                 tv.setText("\n"+c1.getString(0)+". "+c1.getString(1)+" \n\n Status: "+c1.getString(2));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 tv.setBackgroundResource(R.drawable.my_border);
@@ -48,11 +54,11 @@ public class AdminHome extends AppCompatActivity {
                 tv.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        c1.moveToPosition(view.getId());
+                        //c1.moveToPosition(view.getId());
                         Intent intent = new Intent(getApplicationContext(), AdminPollDetails.class);
-                        intent.putExtra("pollname", c1.getString(1));
-                        intent.putExtra("pid", c1.getString(0));
-                        intent.putExtra("numpolls", c1.getCount());
+                        intent.putExtra("pollname", pollnames.get(view.getId()));
+                        intent.putExtra("pid", PIDs.get(view.getId()));
+                        intent.putExtra("numpolls", rows);
                         startActivity(intent);
                     }
                 });
@@ -60,6 +66,7 @@ public class AdminHome extends AppCompatActivity {
                 i++;
                 c1.moveToPosition(i);
             } while (i<rows);
+            c1.close();
         }
         else
         {
@@ -72,6 +79,7 @@ public class AdminHome extends AppCompatActivity {
             //int pixels = (int) (100 * scale + 0.5f);
            // tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
             LL.addView(tv);
+            c1.close();
         }
 
 
@@ -83,6 +91,7 @@ public class AdminHome extends AppCompatActivity {
         startActivity(intent);
 
     }
+
 
 
 

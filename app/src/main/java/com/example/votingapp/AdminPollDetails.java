@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class AdminPollDetails extends AppCompatActivity {
     SQLiteDatabase db;
     TextView timerTextView;
+    String pname;
     String sdate;
     String edate;
     String stime;
@@ -51,7 +54,7 @@ public class AdminPollDetails extends AppCompatActivity {
         setContentView(R.layout.activity_admin_poll_details);
         db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
         Intent intent = getIntent();
-        String pname = intent.getStringExtra("pollname");
+        pname = intent.getStringExtra("pollname");
         Pid = intent.getStringExtra("pid");
         Integer Npolls = intent.getIntExtra("numpolls", 0);
         TextView tv = (TextView) findViewById(R.id.polldetailsname);
@@ -60,6 +63,13 @@ public class AdminPollDetails extends AppCompatActivity {
         int rows = c1.getCount();
         TextView tv1 = (TextView) findViewById(R.id.numq);
         tv1.setText(Integer.toString(rows));
+        c1.close();
+        c1 = db.rawQuery("SELECT (COUNT(DISTINCT uid)) FROM myanswer WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
+        c1.moveToFirst();
+        TextView tv2 = (TextView) findViewById(R.id.numvoters);
+        tv2.setText(c1.getString(0));
+        c1.close();
+
 
         Button startbtn = findViewById(R.id.startbtn);
         startbtn.setOnClickListener(new View.OnClickListener(){
@@ -95,6 +105,18 @@ public class AdminPollDetails extends AppCompatActivity {
                     c2=db.rawQuery("UPDATE poll SET status = 'Ongoing' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
                     c2.moveToFirst();
                     c2.close();
+                    c2=db.rawQuery("SELECT uid, username FROM user",null);
+                    int rows = c2.getCount();
+                    int i=0;
+                    if(c2.moveToFirst()){
+                        do{
+                            String message = "Hi "+c2.getString(1)+". The poll "+pname+" is now available.";
+                            db.execSQL("INSERT INTO allnotifications (uid, context, notiftype, pid) VALUES('"+Integer.valueOf(c2.getString(0))+"','"+message+"','Start','"+Integer.valueOf(Pid)+"' );");
+                            i++;
+                            c2.moveToPosition(i);
+                        }while(i<rows);
+                        c2.close();
+                    }
                     StartTimer();
                 }
             }
@@ -128,7 +150,7 @@ public class AdminPollDetails extends AppCompatActivity {
                 //c2=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
                 //c2.moveToFirst();
                // c2.close();
-                timerTextView.setText("Finish!");
+                timerTextView.setText("Finish1!");
             }
 
         };
@@ -190,11 +212,27 @@ public class AdminPollDetails extends AppCompatActivity {
             if (total_millis < 0) {
                 total_millis = 0;
                 TimerRunning = false;
-                timerTextView.setText("Finish!");
+                timerTextView.setText("Finish2!");
                 db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
                 c3=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
                 c3.moveToFirst();
                 c3.close();
+                c3=db.rawQuery("SELECT uid, username FROM user",null);
+                int rows = c3.getCount();
+                int i=0;
+                if(c3.moveToFirst()){
+                    do{
+                        String message = "Hi "+c3.getString(1)+". The poll "+pname+" voting has ended.";
+                        //db.execSQL("INSERT INTO allnotifications (uid, context, notiftype, pid) VALUES('"+Integer.valueOf(c3.getString(0))+"','"+message+"','End','"+Integer.valueOf(Pid)+"');");
+                        i++;
+                        //Cursor c4 = db.rawQuery("DELETE FROM allnotifications WHERE uid ='"+Integer.valueOf(c3.getString(0))+"' AND pid='"+Integer.valueOf(Pid)+"'AND notiftype='Start' ",null);
+                        Cursor c4 = db.rawQuery("UPDATE allnotifications SET context = '"+message+"', notiftype='End' WHERE uid ='"+Integer.valueOf(c3.getString(0))+"' AND pid='"+Integer.valueOf(Pid)+"'",null);
+                        c4.moveToFirst();
+                        c4.close();
+                        c3.moveToPosition(i);
+                    }while(i<rows);
+                    c3.close();
+                }
 
             } else {
 
@@ -204,8 +242,20 @@ public class AdminPollDetails extends AppCompatActivity {
     }
 
 
+    public void ShowStats(View view) {
+        Intent intent = null;
+        intent = new Intent(this, PollStats.class);
+        intent.putExtra("pid", Pid);
+        startActivity(intent);
+    }
 
+    public void ShowMap(View view) {
 
+        Intent intent = null;
+        intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("pid", Pid);
+        startActivity(intent);
+    }
 }
 
 

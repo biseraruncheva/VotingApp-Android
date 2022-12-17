@@ -21,13 +21,15 @@
 
     <TextView
         android:id="@+id/WelcomeUserID"
-        android:layout_width="215dp"
+        android:layout_width="0dp"
         android:layout_height="58dp"
+        android:layout_marginStart="16dp"
         android:fontFamily="monospace"
-        android:text="WELCOME\n {ADMIN_NAME}"
-        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:text="WELCOME {ADMIN_NAME}"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintStart_toStartOf="@+id/view2"
@@ -36,17 +38,18 @@
 
     <Button
         android:id="@+id/mypollsbtn"
-        android:layout_width="153dp"
+        android:layout_width="200dp"
         android:layout_height="59dp"
         android:layout_marginEnd="4dp"
+        android:onClick="ShowMyPolls"
         android:text="My Polls"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/WelcomeUserID"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.625"
-        android:onClick="ShowMyPolls"/>
+        app:layout_constraintVertical_bias="0.625" />
 
     <TextView
         android:id="@+id/textView3"

@@ -16,7 +16,7 @@
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="00:00:00:00"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/backtoquestions"
@@ -24,12 +24,13 @@
 
     <Button
         android:id="@+id/backtoquestions"
-        android:layout_width="161dp"
+        android:layout_width="192dp"
         android:layout_height="51dp"
         android:layout_marginTop="4dp"
         android:drawableLeft="@drawable/backarrow"
         android:onClick="backToQuestions"
         android:text="Questions"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"

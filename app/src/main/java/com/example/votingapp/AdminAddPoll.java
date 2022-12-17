@@ -65,7 +65,7 @@ public class AdminAddPoll extends AppCompatActivity {
         et1.setLayoutParams(new ViewGroup.LayoutParams(
                   ViewGroup.LayoutParams.MATCH_PARENT,
                   ViewGroup.LayoutParams.WRAP_CONTENT));
-        //LL.addView(tv1);
+        LL.addView(tv1);
         LL.addView(et1, layoutParams);
         key=et1;
         i++;
@@ -90,7 +90,7 @@ public class AdminAddPoll extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(80, 0, 40, 0);
-        //LL.addView(tv);
+        LL.addView(tv);
         LL.addView(et, layoutParams);
         values.add(et);
         j++;
