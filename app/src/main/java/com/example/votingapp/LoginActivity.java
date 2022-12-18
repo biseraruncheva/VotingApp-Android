@@ -18,6 +18,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -76,9 +77,11 @@ public class LoginActivity extends AppCompatActivity {
             c1.close();
             startActivity(intent);
         }
+        else{
+            Toast.makeText(this,"Invalid username or password",Toast.LENGTH_LONG).show();
+        }
     }
     public void addNotification() {
-        //NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         String CHANNEL_ID = "my_channel_01";
         CharSequence name = "my_channel";
@@ -89,11 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             NotificationManager manager = (NotificationManager) getSystemService(NotificationManager.class);
             mChannel.setDescription(Description);
-            //mChannel.enableLights(true);
-            //mChannel.setLightColor(Color.RED);
-            //mChannel.enableVibration(true);
-            //mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            //mChannel.setShowBadge(true);
+
             manager.createNotificationChannel(mChannel);
         }
 
@@ -136,36 +135,37 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 }
-            }
-            c = db.rawQuery("SELECT * FROM allnotifications WHERE uid = '"+Integer.valueOf(Uid)+"' AND notiftype='Start' OR notiftype='End'",null);
-            rows=c.getCount();
-            i=0;
-            if(c.moveToFirst()){
-                do{
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-                    builder.setContentTitle("POLL INFO");
-                    builder.setSmallIcon(R.drawable.ic_launcher_background);
-                    builder.setContentText(c.getString(2));
-                    builder.setAutoCancel(true);
-
-                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-                    Notification notification = builder.build();
-                    managerCompat.notify(i, notification);
-
-                    i++;
-                    c.moveToPosition(i);
-                }while(i<rows);
-                c.close();
-                Cursor cc = db.rawQuery("UPDATE allnotifications SET notiftype='notEnd' WHERE uid = '"+Integer.valueOf(Uid)+"' AND notiftype='Start'", null);
-                cc.moveToFirst();
-                cc.close();
-                cc = db.rawQuery("DELETE FROM allnotifications WHERE uid = '"+Integer.valueOf(Uid)+"' AND notiftype='End'", null);
-                cc.moveToFirst();
-                cc.close();
 
 
-            }
+        }
+        c = db.rawQuery("SELECT * FROM allnotifications WHERE uid = '"+Integer.valueOf(Uid)+"' AND (notiftype='Start' OR notiftype='End')",null);
+        rows=c.getCount();
+        i=0;
+        if(c.moveToFirst()){
+            do{
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+                builder.setContentTitle("POLL INFO");
+                builder.setSmallIcon(R.drawable.ic_launcher_background);
+                builder.setContentText(c.getString(2));
+                builder.setAutoCancel(true);
 
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                Notification notification = builder.build();
+                managerCompat.notify(i, notification);
+
+                i++;
+                c.moveToPosition(i);
+            }while(i<rows);
+            c.close();
+            Cursor cc = db.rawQuery("UPDATE allnotifications SET notiftype='notEnd' WHERE uid = '"+Integer.valueOf(Uid)+"' AND notiftype='Start'", null);
+            cc.moveToFirst();
+            cc.close();
+            cc = db.rawQuery("DELETE FROM allnotifications WHERE uid = '"+Integer.valueOf(Uid)+"' AND notiftype='End'", null);
+            cc.moveToFirst();
+            cc.close();
+
+
+        }
 
 
         }

@@ -27,27 +27,26 @@
         android:layout_width="139dp"
         android:layout_height="58dp"
         android:layout_margin="10dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:onClick="AddPoll"
         android:text="ADD POLL"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view2" />
 
     <TextView
         android:id="@+id/WelcomeID"
-        android:layout_width="215dp"
-        android:layout_height="58dp"
+        android:layout_width="180dp"
+        android:layout_height="56dp"
         android:fontFamily="monospace"
         android:text="WELCOME\n {ADMIN_NAME}"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toStartOf="@+id/camera_button"
-        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -72,6 +71,19 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="55dp"
+        android:layout_height="58dp"
+        android:drawableRight="@drawable/logout"
+        android:onClick="LogOff"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/camera_button"
+        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintStart_toEndOf="@+id/WelcomeID"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:layout_constraintVertical_bias="0.666" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

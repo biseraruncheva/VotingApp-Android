@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -77,6 +78,7 @@ public class UserHome extends AppCompatActivity {
                             intent.putExtra("pollname", pnames.get(view.getId()));
                             intent.putExtra("pid", PIDs.get(view.getId()));
                             intent.putExtra("userid", Uid);
+                            intent.putExtra("username",usern );
                             // intent.putExtra("numpolls", c1.getCount());
                             startActivity(intent);
                         }
@@ -94,10 +96,7 @@ public class UserHome extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText("NO ADDED POLLS YET");
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            //tv.setBackgroundResource(R.drawable.my_border);
-            final float scale = UserHome.this.getApplicationContext().getResources().getDisplayMetrics().density;
-            int pixels = (int) (100 * scale + 0.5f);
-            tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
+
             LL.addView(tv);
             c1.close();
         }
@@ -124,11 +123,7 @@ public class UserHome extends AppCompatActivity {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             NotificationManager manager = (NotificationManager) getSystemService(NotificationManager.class);
             mChannel.setDescription(Description);
-            //mChannel.enableLights(true);
-            //mChannel.setLightColor(Color.RED);
-            //mChannel.enableVibration(true);
-            //mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            //mChannel.setShowBadge(true);
+
             manager.createNotificationChannel(mChannel);
         }
 
@@ -224,5 +219,12 @@ public class UserHome extends AppCompatActivity {
 
         }
             return check;
+    }
+
+    public void LogOff(View view) {
+        Intent intent = null;
+        intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this,"You've logged off",Toast.LENGTH_LONG).show();
+        startActivity(intent);
     }
 }

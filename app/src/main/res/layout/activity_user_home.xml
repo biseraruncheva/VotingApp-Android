@@ -19,34 +19,51 @@
 
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="1dp"
+        android:drawableRight="@drawable/logout"
+        android:onClick="LogOff"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/mypollsbtn"
+        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintStart_toEndOf="@+id/WelcomeUserID"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:layout_constraintVertical_bias="0.666" />
+
     <TextView
         android:id="@+id/WelcomeUserID"
-        android:layout_width="215dp"
-        android:layout_height="58dp"
+        android:layout_width="160dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="4dp"
         android:fontFamily="monospace"
         android:text="WELCOME\n {ADMIN_NAME}"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintRight_toLeftOf="@id/button7"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.818" />
 
     <Button
         android:id="@+id/mypollsbtn"
-        android:layout_width="153dp"
-        android:layout_height="59dp"
+        android:layout_width="144dp"
+        android:layout_height="57dp"
         android:layout_marginEnd="4dp"
+        android:onClick="ShowMyPolls"
         android:text="My Polls"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/WelcomeUserID"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.625"
-        android:onClick="ShowMyPolls"/>
+        app:layout_constraintVertical_bias="0.625" />
 
     <TextView
         android:id="@+id/textView3"

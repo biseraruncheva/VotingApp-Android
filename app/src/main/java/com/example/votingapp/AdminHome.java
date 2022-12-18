@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -25,7 +26,6 @@ public class AdminHome extends AppCompatActivity {
     ArrayList<String> pollnames =new ArrayList<String>();
     ArrayList<String> PIDs = new ArrayList<String>();
 
-    //TextView timerTextView = findViewById(R.id.timerid);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,10 @@ public class AdminHome extends AppCompatActivity {
                 tv.setText("\n"+c1.getString(0)+". "+c1.getString(1)+" \n\n Status: "+c1.getString(2));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 tv.setBackgroundResource(R.drawable.my_border);
-                //final float scale = AdminHome.this.getApplicationContext().getResources().getDisplayMetrics().density;
-                //int pixels = (int) (100 * scale + 0.5f);
+
+
                 tv.setId(i);
-                //tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
+
                 tv.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
@@ -74,10 +74,8 @@ public class AdminHome extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText("NO ADDED POLLS YET");
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            //tv.setBackgroundResource(R.drawable.my_border);
-            //final float scale = AdminHome.this.getApplicationContext().getResources().getDisplayMetrics().density;
-            //int pixels = (int) (100 * scale + 0.5f);
-           // tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
             LL.addView(tv);
             c1.close();
         }
@@ -93,6 +91,10 @@ public class AdminHome extends AppCompatActivity {
     }
 
 
-
-
+    public void LogOff(View view) {
+        Intent intent = null;
+        intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this,"You've logged off",Toast.LENGTH_LONG).show();
+        startActivity(intent);
+    }
 }

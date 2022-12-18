@@ -51,35 +51,22 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
     //ArrayList<String> pids = new ArrayList<>();
     ArrayList<String> pnames = new ArrayList<>();
     String pname;
-
+    String usern;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // try {
-        //    if (savedInstanceState != null) {
-         //       ansIDs = savedInstanceState.getIntegerArrayList("AnswersIDArr");
-          //  }
-       // }
-       // catch (Exception e){
-        //    ansIDs = new ArrayList<Integer>();
-       // }
+
         setContentView(R.layout.activity_user_poll_questions);
         db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
         Intent intent = getIntent();
         pname = intent.getStringExtra("pollname");
         Pid = intent.getStringExtra("pid");
         Uid = intent.getStringExtra("userid");
-        //checkedRadio = intent.getStringExtra("checkedradio");
+        usern = intent.getStringExtra("username");
 
-       // if(checkedRadio != null)
-        //{
-           // ansIDs.add(rn.nextInt());
-        //}
 
-        //Integer Npolls = intent.getIntExtra("numpolls", 0);
         TextView timerTextView = (TextView) findViewById(R.id.dispTimer);
-       // StartTimer();
 
         Cursor c1 = db.rawQuery("SELECT * FROM question WHERE  pid = '" +Integer.valueOf(Pid)+"'", null);
         // data to populate the RecyclerView with
@@ -112,6 +99,7 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
         intent.putExtra("qposition", Integer.toString(position+1));
         intent.putExtra("pid", Pid);
         intent.putExtra("userid", Uid);
+        intent.putExtra("username",usern );
         startActivity(intent);
 
         //Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
@@ -167,10 +155,10 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
                 intent.putExtra("userid", Uid);
                 intent.putExtra("pid", Pid);
                 intent.putExtra("pollname", pname);
+                intent.putExtra("username",usern );
                 TextView timerTextView = (TextView) findViewById(R.id.dispTimer);
                 timerTextView.setText("Finish!");
                 startActivity(intent);
-
             }
 
         };
@@ -229,41 +217,16 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
             start_millis = prefs.getLong("startmillis"+Pid, 6000000);
             total_millis = end_millis - System.currentTimeMillis();
 
-          /*  if (total_millis < 0) {
+            if (total_millis < 0) {
                 total_millis = 0;
                 TimerRunning = false;
                 timerTextView.setText("Finish!");
-                db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
-                c3=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
-                c3.moveToFirst();
-                c3.close();
-                c3=db.rawQuery("SELECT uid, username FROM user",null);
-                int rows = c3.getCount();
-                int i=0;
-                if(c3.moveToFirst()){
-                    do{
-                        String message = "Hi "+c3.getString(1)+". The poll "+pname+" voting has ended.";
-                        //db.execSQL("INSERT INTO allnotifications (uid, context, notiftype, pid) VALUES('"+Integer.valueOf(c3.getString(0))+"','"+message+"','End','"+Integer.valueOf(Pid)+"');");
-                        i++;
-                        //Cursor c4 = db.rawQuery("DELETE FROM allnotifications WHERE uid ='"+Integer.valueOf(c3.getString(0))+"' AND pid='"+Integer.valueOf(Pid)+"'AND notiftype='Start' ",null);
-                        Cursor c4 = db.rawQuery("UPDATE allnotifications SET context = '"+message+"', notiftype='End' WHERE uid ='"+Integer.valueOf(c3.getString(0))+"' AND pid='"+Integer.valueOf(Pid)+"'",null);
-                        c4.moveToFirst();
-                        c4.close();
-                        c3.moveToPosition(i);
-                    }while(i<rows);
-                    c3.close();
-                }
-                addNotification(Pid, pname);
-                Intent intent = new Intent(this, UserHome.class);
-                intent.putExtra("userid", Uid);
-                intent.putExtra("pid", Pid);
-                intent.putExtra("pollname", pname);
-                startActivity(intent);
 
-            } else { */
+
+            } else {
 
                 StartTimer();
-            //}
+            }
         }
     }
 
@@ -279,11 +242,8 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             NotificationManager manager = (NotificationManager) getSystemService(NotificationManager.class);
             mChannel.setDescription(Description);
-            //mChannel.enableLights(true);
-            //mChannel.setLightColor(Color.RED);
-            //mChannel.enableVibration(true);
-            //mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            //mChannel.setShowBadge(true);
+
+
             manager.createNotificationChannel(mChannel);
         }
 
@@ -357,45 +317,18 @@ public class UserPollQuestions extends AppCompatActivity implements MyRecyclerVi
         }
     }
 
+    public void GoBackHome(View view) {
+        Intent intent = new Intent(this,UserHome.class);
+        intent.putExtra("pollname", pname);
+        intent.putExtra("pid", Pid);
+        intent.putExtra("userid", Uid);
+        intent.putExtra("username", usern);
+
+        startActivity(intent);
+    }
 }
 
-   // public void SubmitAnswers(View view) {
 
-       // String poraka="";
-       // int k;
-       // for (k=0; k<ansIDs.size(); k++);
-       // {
-          //  poraka += "Odgovor na korisnik e IDto "+ansIDs.get(k)+"\n";
-        //}
-       // Toast.makeText(this,poraka, Toast.LENGTH_LONG).show();
-      //  ansIDs.clear();
-
-   // }
-
-   // @Override
- //   public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-     //   super.onSaveInstanceState(savedInstanceState);
-     //   savedInstanceState.putIntegerArrayList("AnswersIDArr", ansIDs);
-
-
-
-   // }
-
-
-   // @Override
-    ////public void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        // Restore UI state from the savedInstanceState.
-        // This bundle has also been passed to onCreate.
-
-            //ansIDs = savedInstanceState.getIntegerArrayList("AnswersIDArr");
-       // super.onRestoreInstanceState(savedInstanceState);
-
-
-    //}
 
 
 

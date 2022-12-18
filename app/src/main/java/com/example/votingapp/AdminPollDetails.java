@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -83,42 +84,60 @@ public class AdminPollDetails extends AppCompatActivity {
                 endTtv = findViewById(R.id.endT);
                 //sdate = String.valueOf(startDtv.getText());
                 edate = String.valueOf(endDtv.getText());
-                //stime = String.valueOf(startTtv.getText());
                 etime = String.valueOf(endTtv.getText());
-                TimerRunning = true;
-                start_date = null;
-                end_date = null;
-                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-                //String pom1 = sdate+" "+stime;
-                String pom2 = edate+" "+etime;
-                try {
-                    start_date = new Date();
-                    end_date = (Date) dateFormat.parse(pom2);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                start_millis = start_date.getTime(); //get the start time in milliseconds
-                end_millis = end_date.getTime(); //get the end time in milliseconds
-                total_millis = (end_millis - start_millis); //total time in milliseconds
-                if(start_millis <= System.currentTimeMillis()) {
-                    db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
-                    c2=db.rawQuery("UPDATE poll SET status = 'Ongoing' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
-                    c2.moveToFirst();
-                    c2.close();
-                    c2=db.rawQuery("SELECT uid, username FROM user",null);
-                    int rows = c2.getCount();
-                    int i=0;
-                    if(c2.moveToFirst()){
-                        do{
-                            String message = "Hi "+c2.getString(1)+". The poll "+pname+" is now available.";
-                            db.execSQL("INSERT INTO allnotifications (uid, context, notiftype, pid) VALUES('"+Integer.valueOf(c2.getString(0))+"','"+message+"','Start','"+Integer.valueOf(Pid)+"' );");
-                            i++;
-                            c2.moveToPosition(i);
-                        }while(i<rows);
-                        c2.close();
+                if(!edate.isEmpty() && !etime.isEmpty()) {
+                    String[] date = edate.split("-");
+                    String[] time = etime.split(":");
+                    if (date.length == 3 && time.length == 3) {
+                        if ((Integer.valueOf(date[0]) >= 2022 && (Integer.valueOf(date[1]) >= 1 && Integer.valueOf(date[1]) <= 12) && (Integer.valueOf(date[2]) >= 1 && Integer.valueOf(date[2]) <= 31)) && ((Integer.valueOf(time[0]) >= 1 && Integer.valueOf(time[0]) <= 23) && (Integer.valueOf(time[1]) >= 0 && Integer.valueOf(time[1]) < 60) && (Integer.valueOf(time[2]) >= 0 && Integer.valueOf(time[2]) < 60))) {
+                            //stime = String.valueOf(startTtv.getText());
+                            TimerRunning = true;
+                            start_date = null;
+                            end_date = null;
+                            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+                            //String pom1 = sdate+" "+stime;
+                            String pom2 = edate + " " + etime;
+                            try {
+                                start_date = new Date();
+                                end_date = (Date) dateFormat.parse(pom2);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            start_millis = start_date.getTime(); //get the start time in milliseconds
+                            end_millis = end_date.getTime(); //get the end time in milliseconds
+                            total_millis = (end_millis - start_millis); //total time in milliseconds
+                            if (start_millis <= System.currentTimeMillis()) {
+                                db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
+                                c2 = db.rawQuery("UPDATE poll SET status = 'Ongoing' WHERE pid = '" + Integer.valueOf(Pid) + "'", null);
+                                c2.moveToFirst();
+                                c2.close();
+                                c2 = db.rawQuery("SELECT uid, username FROM user", null);
+                                int rows = c2.getCount();
+                                int i = 0;
+                                if (c2.moveToFirst()) {
+                                    do {
+                                        String message = "Hi " + c2.getString(1) + ". The poll " + pname + " is now available.";
+                                        db.execSQL("INSERT INTO allnotifications (uid, context, notiftype, pid) VALUES('" + Integer.valueOf(c2.getString(0)) + "','" + message + "','Start','" + Integer.valueOf(Pid) + "' );");
+                                        i++;
+                                        c2.moveToPosition(i);
+                                    } while (i < rows);
+                                    c2.close();
+                                }
+                                StartTimer();
+                            }
+                        }
+                        else {
+                            Toast.makeText(AdminPollDetails.this, "Please write in correct format", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(AdminPollDetails.this, "Please write in correct format", Toast.LENGTH_LONG).show();
                     }
-                    StartTimer();
+                } else {
+                    Toast.makeText(AdminPollDetails.this, "Please input remaining empty fields", Toast.LENGTH_LONG).show();
+
                 }
+
+
             }
         }) ;
     }
@@ -146,11 +165,11 @@ public class AdminPollDetails extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                //db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
-                //c2=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
-                //c2.moveToFirst();
-               // c2.close();
-                timerTextView.setText("Finish1!");
+                db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
+                c2=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
+                c2.moveToFirst();
+                c2.close();
+                timerTextView.setText("Finish!");
             }
 
         };
@@ -212,7 +231,7 @@ public class AdminPollDetails extends AppCompatActivity {
             if (total_millis < 0) {
                 total_millis = 0;
                 TimerRunning = false;
-                timerTextView.setText("Finish2!");
+                timerTextView.setText("Finish!");
                 db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
                 c3=db.rawQuery("UPDATE poll SET status = 'Finished' WHERE pid = '" +Integer.valueOf(Pid)+"'",null);
                 c3.moveToFirst();
@@ -243,18 +262,27 @@ public class AdminPollDetails extends AppCompatActivity {
 
 
     public void ShowStats(View view) {
-        Intent intent = null;
-        intent = new Intent(this, PollStats.class);
-        intent.putExtra("pid", Pid);
-        startActivity(intent);
+
+            Intent intent = null;
+            intent = new Intent(this, PollStats.class);
+            intent.putExtra("pid", Pid);
+            startActivity(intent);
+
     }
 
     public void ShowMap(View view) {
-
-        Intent intent = null;
-        intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("pid", Pid);
-        startActivity(intent);
+        Cursor c = db.rawQuery("SELECT status FROM poll WHERE pid = '"+Integer.valueOf(Pid)+"'",null);
+        c.moveToFirst();
+        if(c.getString(0).equals("Finished")) {
+            Intent intent = null;
+            intent = new Intent(this, MapsActivity.class);
+            intent.putExtra("pid", Pid);
+            startActivity(intent);
+        }
+        else{
+            c.close();
+            Toast.makeText(this,"Map is only available for Finished polls.", Toast.LENGTH_LONG).show();
+        }
     }
 }
 

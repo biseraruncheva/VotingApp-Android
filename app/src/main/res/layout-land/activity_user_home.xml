@@ -19,6 +19,20 @@
 
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="64dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="4dp"
+        android:drawableRight="@drawable/logout"
+        android:onClick="LogOff"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/mypollsbtn"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toEndOf="@+id/WelcomeUserID"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/WelcomeUserID"
         android:layout_width="0dp"
@@ -46,8 +60,6 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/WelcomeUserID"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.625" />
 

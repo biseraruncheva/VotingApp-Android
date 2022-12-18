@@ -30,7 +30,7 @@ public class UserMyPolls extends AppCompatActivity {
        // TextView text = (TextView) findViewById(R.id.WelcomeUserID);
         //text.setText("WELCOME "+usern);
         db = openOrCreateDatabase("votingapp", MODE_PRIVATE, null);
-        Cursor c1 = db.rawQuery("SELECT * FROM (poll, myanswer) WHERE myanswer.uid = '"+Integer.valueOf(Uid)+"' AND poll.status='Finished'",null);
+        Cursor c1 = db.rawQuery("SELECT DISTINCT(poll.pid), poll.name, poll.status FROM (poll, myanswer) WHERE myanswer.uid = '"+Integer.valueOf(Uid)+"' AND poll.status='Finished' AND poll.pid = myanswer.pid",null);
         int rows = c1.getCount();
         if (c1.moveToPosition(0)) {
             do {
@@ -42,7 +42,7 @@ public class UserMyPolls extends AppCompatActivity {
                 tv.setBackgroundResource(R.drawable.my_border);
                 final float scale = UserMyPolls.this.getApplicationContext().getResources().getDisplayMetrics().density;
                 int pixels = (int) (100 * scale + 0.5f);
-                tv.setId(i);
+                tv.setId(j);
                 //tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
                 tv.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -58,7 +58,7 @@ public class UserMyPolls extends AppCompatActivity {
                 });
                 LL.addView(tv);
                 j++;
-                c1.moveToPosition(i);
+                c1.moveToPosition(j);
             } while (j<rows);
             c1.close();
         }
@@ -68,10 +68,8 @@ public class UserMyPolls extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText("NO ADDED POLLS YET");
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            //tv.setBackgroundResource(R.drawable.my_border);
-            final float scale = UserMyPolls.this.getApplicationContext().getResources().getDisplayMetrics().density;
-            int pixels = (int) (100 * scale + 0.5f);
-            tv.setLayoutParams(new ViewGroup.LayoutParams(pixels, ViewGroup.LayoutParams.MATCH_PARENT));
+
+
             LL.addView(tv);
             c1.close();
         }
